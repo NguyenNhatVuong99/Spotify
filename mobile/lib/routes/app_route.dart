@@ -3,7 +3,7 @@ import 'package:mobile/routes/app_route_name.dart';
 import 'package:mobile/routes/app_route_page.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: AppRouteName.getStartRoute,
+  initialLocation: AppRouteName.authRoute,
   routes: routePage
       .map((route) => GoRoute(
             path: route.route,

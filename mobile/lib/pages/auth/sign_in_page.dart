@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/services/auth_service.dart';
 import 'package:mobile/themes/app_textstyle.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile/configs/svg.dart';
 import 'package:mobile/themes/app_color.dart';
 import 'sign_up_page.dart';
+import 'package:mobile/services/auth_service.dart';
 
 // import "auth_page.dart";
 class SignInPage extends StatefulWidget {
@@ -21,7 +23,11 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
+  AuthService authService = AuthService();
+
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+
   bool _isPasswordVisible = false;
   void _togglePasswordVisibility() {
     setState(() {
@@ -98,8 +104,9 @@ class _SignInPageState extends State<SignInPage> {
                     ],
                   ),
                   TextField(
+                    controller: _emailController,
                     decoration: InputDecoration(
-                      labelText: 'Enter Username Or Email',
+                      labelText: 'Enter Email',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
                             20.0), // Adjust the radius as needed
@@ -154,7 +161,12 @@ class _SignInPageState extends State<SignInPage> {
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(99)))),
-                      onPressed: () {},
+                      onPressed: () {
+                        authService.singIn(
+                            email: _emailController.text,
+                            password: _passwordController.text,
+                            context: context);
+                      },
                       child: Text(
                         "Sign in",
                         style: AppTextStyle.instance.inputText,

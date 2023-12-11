@@ -4,6 +4,7 @@ import 'package:mobile/themes/app_textstyle.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile/configs/svg.dart';
 import 'package:mobile/themes/app_color.dart';
+import 'package:mobile/services/auth_service.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -21,7 +22,10 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  AuthService authService = AuthService();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _fullNameController = TextEditingController();
   bool _isPasswordVisible = false;
   @override
   Widget build(BuildContext context) {
@@ -92,6 +96,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ],
                   ),
                   TextField(
+                    controller: _fullNameController,
                     decoration: InputDecoration(
                       labelText: 'Full name',
                       border: OutlineInputBorder(
@@ -104,6 +109,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 20,
                   ),
                   TextField(
+                    controller: _emailController,
                     decoration: InputDecoration(
                       labelText: 'Enter Email',
                       border: OutlineInputBorder(
@@ -157,7 +163,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           shape: const RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(99)))),
-                      onPressed: () {},
+                      onPressed: () {
+                        authService.signUp(
+                          context: context,
+                          name: _fullNameController.text,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+                      },
                       child: Text(
                         "Creat Account",
                         style: AppTextStyle.instance.inputText,
@@ -192,7 +205,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         style: AppTextStyle.instance.textFooter,
                       ),
                       TextButton(
-                        onPressed: _navigateToSignInPage,
+                        onPressed: () {},
                         child: Text(
                           "Sign In",
                           style: AppTextStyle.instance.textFooterColor,

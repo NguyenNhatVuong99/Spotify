@@ -2,10 +2,10 @@ import 'package:flutter/widgets.dart';
 import 'package:mobile/pages/auth/auth_page.dart';
 import 'package:mobile/pages/auth/sign_in_page.dart';
 import 'package:mobile/pages/auth/sign_up_page.dart';
-import 'package:mobile/pages/home/artics_page.dart';
-import 'package:mobile/pages/home/home_page.dart';
-import 'package:mobile/pages/home/lyrics_page.dart';
-import 'package:mobile/pages/home/music_page.dart';
+// import 'package:mobile/pages/favorite_page/favorite_page.dart';
+import 'package:mobile/pages/home_page/home_page.dart';
+// import 'package:mobile/pages/home/lyrics_page.dart';
+import 'package:mobile/pages/music_page/music_page.dart';
 import 'package:mobile/pages/start/choose_mode_page.dart';
 import 'package:mobile/pages/start/get_start_page.dart';
 import 'package:mobile/pages/start/loading_page.dart';
@@ -26,7 +26,7 @@ final List<AppRoutePage> routePage = [
   const AppRoutePage(AppRouteName.signInRoute, SignInPage()),
   const AppRoutePage(AppRouteName.signUpRoute, SignUpPage()),
   const AppRoutePage(AppRouteName.homeRoute, HomePage()),
-  const AppRoutePage(AppRouteName.lyricsRoute, LyricsPage()),
-  const AppRoutePage(AppRouteName.musicRoute, MusicPage()),
-  const AppRoutePage(AppRouteName.articsRoute, ArticsPage()),
+  // const AppRoutePage(AppRouteName.lyricsRoute, LyricsPage()),
+  AppRoutePage(AppRouteName.musicRoute, playerMusicPage()),
+  // const AppRoutePage(AppRouteName.articsRoute, ArticsPage()),
 ];

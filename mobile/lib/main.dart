@@ -1,26 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/routes/app_route.dart';
 import 'package:mobile/themes/app_color.dart';
+import 'package:mobile/themes/provide_theme.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Spotify',
-      theme: ThemeData(
-        colorScheme: const ColorScheme.dark().copyWith(
-          background: AppColor
-              .blackBackground1Color, // Set your desired background color here
-        ),
+    return ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: Consumer<ThemeProvider>(
+        builder: (context, themeProvider, child) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: 'Theme Toggle',
+            theme: themeProvider.isDarkTheme
+                ? ThemeData.dark()
+                : ThemeData.light(),
+            routerConfig: router,
+          );
+        },
       ),
-      routerConfig: router,
     );
   }
 }

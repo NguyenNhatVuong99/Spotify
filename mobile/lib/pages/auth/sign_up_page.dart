@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/components/app_input.dart';
+import 'package:mobile/rules/rules.dart';
 import 'sign_in_page.dart';
 import 'package:mobile/themes/app_textstyle.dart';
 import 'package:flutter_svg/svg.dart';
@@ -26,6 +28,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _fullNameController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool _isPasswordVisible = false;
   @override
   Widget build(BuildContext context) {
@@ -71,149 +74,131 @@ class _SignUpPageState extends State<SignUpPage> {
             color: AppColor.grayDarkBackgroundColor,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 50),
-                  Text(
-                    'Register',
-                    style: AppTextStyle.instance.authTitle,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'If you need any support',
-                        style: AppTextStyle.instance.smallText,
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Click Here",
-                          style: AppTextStyle.instance.smallTextColor,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 50),
+                    Text(
+                      'Register',
+                      style: AppTextStyle.instance.authTitle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'If you need any support',
+                          style: AppTextStyle.instance.smallText,
                         ),
-                      ),
-                    ],
-                  ),
-                  TextField(
-                    controller: _fullNameController,
-                    decoration: InputDecoration(
-                      labelText: 'Full name',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                            20.0), // Adjust the radius as needed
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Enter Email',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                            20.0), // Adjust the radius as needed
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextField(
-                    obscureText: !_isPasswordVisible,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                            20.0), // Adjust the radius as needed
-                      ),
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          // Toggle password visibility
-                          setState(() {
-                            _isPasswordVisible = !_isPasswordVisible;
-                          });
-                        },
-                        child: Icon(
-                          _isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Click Here",
+                            style: AppTextStyle.instance.smallTextColor,
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: AppColor.primaryTextColor,
-                    ),
-                    width: MediaQuery.of(context).size.width,
-                    height: 80,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: Colors.white,
-                          shadowColor: Colors.transparent,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(99)))),
-                      onPressed: () {
-                        authService.signUp(
-                          context: context,
-                          name: _fullNameController.text,
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                        );
+                    AppInput(
+                      label: 'Enter Name',
+                      controller: _fullNameController,
+                      validator: (value) {
+                        return RulesValidator.validatorName(value);
                       },
-                      child: Text(
-                        "Creat Account",
-                        style: AppTextStyle.instance.inputText,
-                      ),
                     ),
-                  ),
-                  const SizedBox(height: 25),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(AppSVG.line),
-                      const Text('or  '),
-                      SvgPicture.asset(AppSVG.line),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SvgPicture.asset(AppSVG.google),
-                      SvgPicture.asset(AppSVG.apple),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Do you have any account ?',
-                        style: AppTextStyle.instance.textFooter,
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AppInput(
+                      label: 'Enter Email',
+                      controller: _emailController,
+                      validator: (value) {
+                        return RulesValidator.validatorEmail(value);
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AppInput(
+                        isPassword: true,
+                        label: 'Password',
+                        controller: _passwordController,
+                        validator: (value) {
+                          return RulesValidator.validatorPassword(value);
+                        }),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: AppColor.primaryTextColor,
                       ),
-                      TextButton(
-                        onPressed: () {},
+                      width: MediaQuery.of(context).size.width,
+                      height: 80,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            foregroundColor: Colors.white,
+                            shadowColor: Colors.transparent,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(99)))),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            authService.signUp(
+                              context: context,
+                              name: _fullNameController.text,
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            );
+                          }
+                        },
                         child: Text(
-                          "Sign In",
-                          style: AppTextStyle.instance.textFooterColor,
+                          "Creat Account",
+                          style: AppTextStyle.instance.inputText,
                         ),
                       ),
-                    ],
-                  )
-                ],
+                    ),
+                    const SizedBox(height: 25),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(AppSVG.line),
+                        const Text('or  '),
+                        SvgPicture.asset(AppSVG.line),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SvgPicture.asset(AppSVG.google),
+                        SvgPicture.asset(AppSVG.apple),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Do you have any account ?',
+                          style: AppTextStyle.instance.textFooter,
+                        ),
+                        TextButton(
+                          onPressed: () {},
+                          child: Text(
+                            "Sign In",
+                            style: AppTextStyle.instance.textFooterColor,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

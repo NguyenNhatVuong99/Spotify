@@ -57,4 +57,15 @@ class AppTextStyle {
     fontFamily: 'satoshi',
     fontWeight: FontWeight.w700,
   );
+  TextStyle diaLogStyle = const TextStyle(
+    color: AppColor.blackBackground1Color,
+    fontSize: 20,
+    fontFamily: 'satoshi',
+    fontWeight: FontWeight.bold,
+  );
+  TextStyle textStyeDialog = const TextStyle(
+    fontWeight: FontWeight.bold,
+    color: AppColor.blackBackground1Color,
+    fontSize: 20,
+  );
 }

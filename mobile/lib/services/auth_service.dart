@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:mobile/components/custom_dialog.dart';
 import 'package:mobile/pages/auth/sign_in_page.dart';
 import 'package:mobile/pages/home/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,19 +29,22 @@ class AuthService {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('x-auth-token', accessToken);
 
+        // ignore: use_build_context_synchronously
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => const HomePage()),
         );
       } else {
         throw jsonDecode(res.body)["message"];
       }
     } catch (err) {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            title: Text(err.toString()),
+          return CustomDialog(
+            title: 'LOGIN FAILED',
+            desc: err.toString(),
           );
         },
       );
@@ -64,19 +68,22 @@ class AuthService {
         },
       );
       if (res.statusCode == 201) {
+        // ignore: use_build_context_synchronously
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SignInPage()),
+          MaterialPageRoute(builder: (context) => const SignInPage()),
         );
       } else {
         throw jsonDecode(res.body)["message"];
       }
     } catch (err) {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            title: Text(err.toString()),
+          return CustomDialog(
+            title: 'Register FAILED',
+            desc: err.toString(),
           );
         },
       );

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/components/app_input.dart';
+import 'package:mobile/pages/auth/support_page.dart';
+import 'package:mobile/rules/rules.dart';
 import 'package:mobile/services/auth_service.dart';
 import 'package:mobile/themes/app_textstyle.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,6 +19,13 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  void _navigateToSupportPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Support_page()),
+    );
+  }
+
   void _navigateToSignUpPage() {
     Navigator.push(
       context,
@@ -27,13 +37,7 @@ class _SignInPageState extends State<SignInPage> {
 
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-
-  bool _isPasswordVisible = false;
-  void _togglePasswordVisibility() {
-    setState(() {
-      _isPasswordVisible = !_isPasswordVisible;
-    });
-  }
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -79,137 +83,129 @@ class _SignInPageState extends State<SignInPage> {
             color: AppColor.grayDarkBackgroundColor,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 50),
-                  Text(
-                    'Sign in',
-                    style: AppTextStyle.instance.authTitle,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'If you need any support',
-                        style: AppTextStyle.instance.smallText,
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          "Click Here",
-                          style: AppTextStyle.instance.smallTextColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                  TextField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Enter Email',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                            20.0), // Adjust the radius as needed
-                      ),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(height: 50),
+                    Text(
+                      'Sign in',
+                      style: AppTextStyle.instance.authTitle,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextField(
-                    obscureText: !_isPasswordVisible,
-                    controller: _passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(
-                            20.0), // Adjust the radius as needed
-                      ),
-                      suffixIcon: GestureDetector(
-                        onTap: _togglePasswordVisibility,
-                        child: Icon(
-                          _isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'If you need any support',
+                          style: AppTextStyle.instance.smallText,
                         ),
-                      ),
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      TextButton(
-                          onPressed: () {},
+                        TextButton(
+                          onPressed: _navigateToSupportPage,
                           child: Text(
-                            "Recovery password",
-                            style: AppTextStyle.instance.textLetter,
-                          )),
-                    ],
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: AppColor.primaryTextColor,
+                            "Click Here",
+                            style: AppTextStyle.instance.smallTextColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    width: MediaQuery.of(context).size.width,
-                    height: 80,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: Colors.white,
-                          shadowColor: Colors.transparent,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(99)))),
-                      onPressed: () {
-                        authService.singIn(
-                            email: _emailController.text,
-                            password: _passwordController.text,
-                            context: context);
+                    AppInput(
+                      label: 'Enter Email',
+                      controller: _emailController,
+                      validator: (value) {
+                        return RulesValidator.validatorEmail(
+                            value); // Return null if the email is valid
                       },
-                      child: Text(
-                        "Sign in",
-                        style: AppTextStyle.instance.inputText,
-                      ),
                     ),
-                  ),
-                  const SizedBox(height: 25),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset(AppSVG.line),
-                      Text('or  '),
-                      SvgPicture.asset(AppSVG.line),
-                    ],
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SvgPicture.asset(AppSVG.google),
-                      SvgPicture.asset(AppSVG.apple),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 50,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'not a member ?',
-                        style: AppTextStyle.instance.textFooter,
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    AppInput(
+                        isPassword: true,
+                        label: 'Password',
+                        controller: _passwordController,
+                        validator: (value) {
+                          return RulesValidator.validatorPassword(value);
+                        }),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              "Recovery password",
+                              style: AppTextStyle.instance.textLetter,
+                            )),
+                      ],
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        color: AppColor.primaryTextColor,
                       ),
-                      TextButton(
-                        onPressed: _navigateToSignUpPage,
+                      width: MediaQuery.of(context).size.width,
+                      height: 80,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            foregroundColor: Colors.white,
+                            shadowColor: Colors.transparent,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(99)))),
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            authService.singIn(
+                              context: context,
+                              email: _emailController.text,
+                              password: _passwordController.text,
+                            );
+                          }
+                        },
                         child: Text(
-                          "Register Now",
-                          style: AppTextStyle.instance.textFooterColor,
+                          "Sign in",
+                          style: AppTextStyle.instance.inputText,
                         ),
                       ),
-                    ],
-                  )
-                ],
+                    ),
+                    const SizedBox(height: 25),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(AppSVG.line),
+                        Text('or  '),
+                        SvgPicture.asset(AppSVG.line),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        SvgPicture.asset(AppSVG.google),
+                        SvgPicture.asset(AppSVG.apple),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'not a member ?',
+                          style: AppTextStyle.instance.textFooter,
+                        ),
+                        TextButton(
+                          onPressed: _navigateToSignUpPage,
+                          child: Text(
+                            "Register Now",
+                            style: AppTextStyle.instance.textFooterColor,
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/pages/auth/support_page.dart';
 import 'package:mobile/themes/app_color.dart';
 import 'sign_in_page.dart';
 import 'sign_up_page.dart';
 import 'package:mobile/themes/app_textstyle.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:mobile/configs/svg.dart';
+
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -27,6 +29,7 @@ class _AuthPageState extends State<AuthPage> {
       MaterialPageRoute(builder: (context) => const SignInPage()),
     );
   }
+    
 
   @override
   Widget build(BuildContext context) {

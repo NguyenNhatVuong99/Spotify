@@ -17,4 +17,6 @@ class AppColor {
   static const blueTextColor = Color(0XFF288CE9);
   static const grayInputColor = Color(0XFFA7A7A7);
   static const primaryTextColor = Color(0XFF38B432);
+
+  // static const dialogColor = Color.fromARGB(255, 222, 9, 16);
 }

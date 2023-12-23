@@ -20,7 +20,7 @@ class playListComponents extends StatefulWidget {
 
 class _playListState extends State<playListComponents> {
   // late Future<Tracks> tracks;
-  late List tracks;
+  late List tracks = [];
 
   @override
   void initState() {
@@ -84,54 +84,36 @@ class _playListState extends State<playListComponents> {
                           padding: EdgeInsets.only(left: 30, right: 30),
                           child: Container(
                             width: MediaQuery.of(context).size.width / 2.5,
-                            height:70,
+                            height: 70,
                             child: Row(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(right: 10, bottom: 10),
-                                  child: Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      color: AppColor.secondaryColor,
-                                    ),
-                                    child: InkWell(
-                                        onTap: () {},
-                                        child: ContainsIcon(
-                                          path: AppSVG.play,
-                                          size: 18,
-                                        )),
-                                  ),
+                                  padding:
+                                      EdgeInsets.only(right: 10, bottom: 10),
+                                  child: Container(),
                                 ),
                                 Container(
                                   child: Column(
                                     children: [
                                       Padding(
-                                        padding:
-                                            EdgeInsets.only(top: 5, bottom: 5),
+                                        padding: EdgeInsets.only(
+                                            left: 5, top: 5, bottom: 5),
                                         child: Text(truncateText(track["name"]),
                                             style: AppTextStyle.songTitle),
                                       ),
-                                      Text(truncateText(track["album"]["artist"]["name"]),
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppTextStyle.artistNameMin),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 5, top: 5, bottom: 5),
+                                        child: Text(
+                                            truncateText(track["album"]
+                                                ["artist"]["name"]),
+                                            overflow: TextOverflow.ellipsis,
+                                            style: AppTextStyle.artistNameMin),
+                                      ),
                                     ],
                                   ),
                                 ),
                               ],
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            width: 50,
-                            height: 50,
-                            child: Center(
-                              child: Text(
-                                '5:33',
-                                style: AppTextStyle.time,
-                              ),
                             ),
                           ),
                         ),

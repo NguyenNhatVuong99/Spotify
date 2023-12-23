@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, prefer_const_literals_to_create_immutables, prefer_const_constructors
+// ignore_for_file: camel_case_types, prefer_const_literals_to_create_immutables, prefer_const_constructors, deprecated_member_use
 
 import 'package:flutter/material.dart';
 import 'package:mobile/pages/favorite_page/favorite_page.dart';
@@ -28,7 +28,8 @@ class _homePageState extends State<HomePage> {
 
   void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index;
+      // _selectedIndex = index;
+      _selectedIndex = 0;
     });
   }
 
@@ -57,24 +58,30 @@ class _homePageState extends State<HomePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppSVG.discover,
-            color: _selectedIndex == 1
+            icon: SvgPicture.asset(
+              AppSVG.discover,
+              color: _selectedIndex == 1
                   ? AppColor.primaryColor
-                  : AppColor.secondaryColor,),
+                  : AppColor.secondaryColor,
+            ),
             label: 'Discover',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppSVG.heart,
-            color: _selectedIndex == 2
+            icon: SvgPicture.asset(
+              AppSVG.heart,
+              color: _selectedIndex == 2
                   ? AppColor.primaryColor
-                  : AppColor.secondaryColor,),
+                  : AppColor.secondaryColor,
+            ),
             label: 'favorite',
           ),
           BottomNavigationBarItem(
-            icon: SvgPicture.asset(AppSVG.profile,
-            color: _selectedIndex == 3
+            icon: SvgPicture.asset(
+              AppSVG.profile,
+              color: _selectedIndex == 3
                   ? AppColor.primaryColor
-                  : AppColor.secondaryColor,),
+                  : AppColor.secondaryColor,
+            ),
             label: 'Profile',
           ),
         ],

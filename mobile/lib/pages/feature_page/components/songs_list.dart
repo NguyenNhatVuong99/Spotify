@@ -19,7 +19,7 @@ class SongsList extends StatefulWidget {
 }
 
 class _SongListState extends State<SongsList> {
-  late List tracks;
+  List tracks = [];
 
   @override
   void initState() {
@@ -58,7 +58,6 @@ class _SongListState extends State<SongsList> {
                             image: DecorationImage(
                               image: NetworkImage("${track['images']}"),
                             ),
-                            borderRadius: BorderRadius.circular(30),
                           ),
                           child: Stack(
                             children: <Widget>[
@@ -97,14 +96,16 @@ class _SongListState extends State<SongsList> {
                               SizedBox(
                                 height: 10,
                               ),
-                              Text( truncateText(track['name']),
+                              Text(
+                                truncateText(track['name']),
                                 style: AppTextStyle.heading,
                                 textAlign: TextAlign.left,
                               ),
                               SizedBox(
                                 height: 10,
                               ),
-                              Text(truncateText(track["album"]["artist"]["name"]),
+                              Text(
+                                truncateText(track["album"]["artist"]["name"]),
                                 style: AppTextStyle.artistName,
                                 textAlign: TextAlign.left,
                               ),

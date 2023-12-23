@@ -14,7 +14,7 @@ class favoritePlayListComponents extends StatefulWidget {
 
 class _favoritePlayListState extends State<favoritePlayListComponents>
     with SingleTickerProviderStateMixin {
-  late List tracks;
+  List tracks = [];
 
   @override
   void initState() {
@@ -42,91 +42,88 @@ class _favoritePlayListState extends State<favoritePlayListComponents>
             const SizedBox(
               height: 30,
             ),
+            // ignore: unused_local_variable
             for (var track in tracks)
               Padding(
                   padding: const EdgeInsets.all(20),
                   child: Container(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 60,
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  width: 60,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(AppAssets.Song4)),
-                                      borderRadius: BorderRadius.circular(8)),
+                    width: MediaQuery.of(context).size.width,
+                    height: 60,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: InkWell(
+                              onTap: () {},
+                              child: Container(
+                                width: 60,
+                                height: 60,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(AppAssets.Song4)),
+                                    borderRadius: BorderRadius.circular(8)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const Expanded(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              InkWell(
+                                child: Text(
+                                  'song name',
+                                  // 'hello',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyle.songTitle,
                                 ),
                               ),
-                            ),
+                              InkWell(
+                                child: Text(
+                                  'Billie Eilish',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyle.artistNameMin,
+                                ),
+                              )
+                            ],
                           ),
-                          Expanded(
-                            child: Container(
-                              child: const Column(
-                                children: [
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  InkWell(
-                                    child: Text(
-                                      'song name',
-                                      // 'hello',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AppTextStyle.songTitle,
-                                    ),
-                                  ),
-                                  InkWell(
-                                    child: Text(
-                                      'Billie Eilish',
-                                      overflow: TextOverflow.ellipsis,
-                                      style: AppTextStyle.artistNameMin,
-                                    ),
-                                  )
-                                ],
-                              ),
+                        ),
+                        Expanded(
+                            child: Row(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 40),
+                              child: Container(
+                                  width: 50,
+                                  height: 30,
+                                  child: const Text('5:33',
+                                      style: AppTextStyle.time)),
                             ),
-                          ),
-                          Expanded(
-                              child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(left: 40),
+                            Expanded(
+                              child: Align(
+                                alignment: Alignment.centerRight,
                                 child: Container(
-                                    width: 50,
-                                    height: 30,
-                                    child: const Text('5:33',
-                                        style: AppTextStyle.time)),
-                              ),
-                              Expanded(
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Container(
-                                    width: 40,
-                                    height: 40,
-                                    child: Center(
-                                      child: IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.more_horiz,
-                                          color: AppColor.activeTextColor,
-                                          size: 20,
-                                        ),
+                                  width: 40,
+                                  height: 40,
+                                  child: Center(
+                                    child: IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.more_horiz,
+                                        color: AppColor.activeTextColor,
+                                        size: 20,
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ],
-                          ))
-                        ],
-                      ),
+                            ),
+                          ],
+                        ))
+                      ],
                     ),
                   ))
           ],

@@ -1,11 +1,11 @@
 import 'package:http/http.dart' as http;
+import 'package:mobile/configs/constant_url.dart';
 import 'package:mobile/models/Tracks.dart';
 import 'dart:convert';
 
 Future<List> fetchTracks() async {
   List<dynamic> result = [];
-  final response =
-      await http.get(Uri.parse('https://spotify-xemk.onrender.com/api/tracks'));
+  final response = await http.get(Uri.parse(ConstantURL.getTracksURL));
 
   if (response.statusCode == 200) {
     late List<Tracks> tracks;
@@ -13,16 +13,15 @@ Future<List> fetchTracks() async {
     result = json['data'] as List<dynamic>;
     final transformed = result.map((item) {
       final artist = Artist(
-        id: item["album"]["artist"]["id"],
-        name: item["album"]["artist"]["name"],
-        images: item["album"]["artist"]["imgaes"],
-        followers: item["album"]["artist"]["followers"],
-        popularity: item["album"]["artist"]["popularity"],
-        status: item["album"]["artist"]["status"],
-        userId: item["album"]["artist"]["user_id"],
-        createdAt: item["album"]["artist"]["created_at"],
-        updatedAt: item["album"]["artist"]["updated_at"]
-      );
+          id: item["album"]["artist"]["id"],
+          name: item["album"]["artist"]["name"],
+          images: item["album"]["artist"]["imgaes"],
+          followers: item["album"]["artist"]["followers"],
+          popularity: item["album"]["artist"]["popularity"],
+          status: item["album"]["artist"]["status"],
+          userId: item["album"]["artist"]["user_id"],
+          createdAt: item["album"]["artist"]["created_at"],
+          updatedAt: item["album"]["artist"]["updated_at"]);
       final album = Album(
           id: item["album"]["id"],
           name: item["album"]["name"],

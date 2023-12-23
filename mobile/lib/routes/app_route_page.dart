@@ -6,9 +6,9 @@ import 'package:mobile/pages/auth/sign_up_page.dart';
 import 'package:mobile/pages/home_page/home_page.dart';
 // import 'package:mobile/pages/home/lyrics_page.dart';
 import 'package:mobile/pages/music_page/music_page.dart';
-import 'package:mobile/pages/start/choose_mode_page.dart';
-import 'package:mobile/pages/start/get_start_page.dart';
-import 'package:mobile/pages/start/loading_page.dart';
+// import 'package:mobile/pages/start/choose_mode_page.dart';
+// import 'package:mobile/pages/start/get_start_page.dart';
+// import 'package:mobile/pages/start/loading_page.dart';
 import 'package:mobile/routes/app_route_name.dart';
 
 class AppRoutePage {
@@ -19,9 +19,9 @@ class AppRoutePage {
 }
 
 final List<AppRoutePage> routePage = [
-  const AppRoutePage(AppRouteName.loadingRoute, LoadingPage()),
-  const AppRoutePage(AppRouteName.getStartRoute, GetStartPage()),
-  const AppRoutePage(AppRouteName.chooseModeRoute, ChooseModePage()),
+  // const AppRoutePage(AppRouteName.loadingRoute, LoadingPage()),
+  // const AppRoutePage(AppRouteName.getStartRoute, GetStartPage()),
+  // const AppRoutePage(AppRouteName.chooseModeRoute, ChooseModePage()),
   const AppRoutePage(AppRouteName.authRoute, AuthPage()),
   const AppRoutePage(AppRouteName.signInRoute, SignInPage()),
   const AppRoutePage(AppRouteName.signUpRoute, SignUpPage()),

@@ -9,8 +9,6 @@ import 'package:mobile/widgets/contain_textfield.dart';
 import 'package:mobile/themes/app_assets.dart';
 import 'package:mobile/themes/app_color.dart';
 import 'package:mobile/widgets/custom_modal.dart';
-import "package:flutter_svg/flutter_svg.dart";
-import "package:mobile/configs/svg.dart";
 import 'package:provider/provider.dart';
 
 class featurePage extends StatefulWidget {

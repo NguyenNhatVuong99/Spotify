@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile/themes/provide_theme.dart';
 
 class AppColor {
   static const blackBackground1Color = Color(0XFF0d0c0c);
@@ -19,4 +20,33 @@ class AppColor {
   static const primaryTextColor = Color(0XFF38B432);
 
   // static const dialogColor = Color.fromARGB(255, 222, 9, 16);
+  static Color primaryBackground = const Color(0xFF1C1B1B);
+  static Color secondaryColor = const Color(0xFF343434);
+  static Color unActiveTextColor = const Color(0xFF616161);
+  static Color activeTextColor = const Color(0xFFDBDBDB);
+  static Color profileBackground = const Color(0xFF2C2B2B);
+  static Color favListBackground = const Color(0xFF242424);
 }
+
+// class LightThemeAppColor {
+//   static Color blackBackground1Color = Colors.white;
+//   static Color blackBackground2Color = Colors.white;
+//   static Color grayMediumBackgroundColor = Colors.grey[200]!;
+//   static Color grayDarkBackgroundColor = Colors.grey[200]!;
+//   static Color primaryColor = Colors.green;
+//   static Color grayTitleColor = Colors.grey[600]!;
+//   static Color grayText1Color = Colors.grey[500]!;
+//   static Color grayText2Color = Colors.grey[400]!;
+//   static Color grayText3Color = Colors.grey[300]!;
+//   static Color whiteTextColor = Colors.white;
+//   static Color whiteText2Color = Colors.grey[100]!;
+//   static Color blueTextColor = Colors.blue;
+//   static Color grayInputColor = Colors.grey[500]!;
+//   static Color primaryTextColor = Colors.green;
+//   static Color primaryBackground = Colors.white;
+//   static Color secondaryColor = Colors.grey[300]!;
+//   static Color unActiveTextColor = Colors.grey[500]!;
+//   static Color activeTextColor = Colors.grey[100]!;
+//   static Color profileBackground = Colors.grey[200]!;
+//   static Color favListBackground = Colors.grey[100]!;
+// }

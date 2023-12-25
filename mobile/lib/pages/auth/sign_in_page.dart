@@ -1,14 +1,19 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/components/app_input.dart';
+import 'package:mobile/components/custom_dialog_with_video.dart';
+import 'package:mobile/configs/constant_video.dart';
 import 'package:mobile/pages/auth/support_page.dart';
+import 'package:mobile/routes/app_route_name.dart';
 import 'package:mobile/rules/rules.dart';
 import 'package:mobile/services/auth_service.dart';
 import 'package:mobile/themes/app_textstyle.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mobile/configs/svg.dart';
+import 'package:mobile/configs/constant_svg.dart';
 import 'package:mobile/themes/app_color.dart';
 import 'sign_up_page.dart';
-import 'package:mobile/services/auth_service.dart';
 
 // import "auth_page.dart";
 class SignInPage extends StatefulWidget {
@@ -19,17 +24,59 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  // ignore: unused_field
+  bool _isLoading = false;
+  bool result = false;
+
+  void _handleSignIn() async {
+    final goRouter = GoRouter.of(context);
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    // Simulating a sign-in process (replace with your actual sign-in logic)
+    if (_formKey.currentState!.validate()) {
+      result = await authService.singIn(
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      setState(() {
+        _isLoading = false;
+      });
+      if (result) {
+        goRouter.go(AppRouteName.loadingRoute);
+        await Future.delayed(const Duration(seconds: 2));
+
+        // Navigate to the HomePage after 2 seconds
+        goRouter.go(AppRouteName.homeRoute);
+      }
+    }
+  }
+
   void _navigateToSupportPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Support_page()),
+      MaterialPageRoute(builder: (context) => const Support_page()),
     );
   }
 
   void _navigateToSignUpPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SignUpPage()),
+      MaterialPageRoute(builder: (context) => const SignUpPage()),
+    );
+  }
+
+  void _forgotPassword() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return const CustomDialogWithVideo(
+            desc: 'Relax and try to remember \n your password :))',
+            videoUrl: ConstantVideo.meoDance);
+      },
     );
   }
 
@@ -53,7 +100,7 @@ class _SignInPageState extends State<SignInPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              AppSVG.logo,
+              ConstantSvg.logo,
               height: 33,
             ),
           ],
@@ -62,7 +109,7 @@ class _SignInPageState extends State<SignInPage> {
           children: [
             IconButton(
               icon: SvgPicture.asset(
-                AppSVG.arrow,
+                ConstantSvg.arrow,
                 // ignore: deprecated_member_use
                 color: Colors.white,
                 height: 20,
@@ -112,6 +159,7 @@ class _SignInPageState extends State<SignInPage> {
                     AppInput(
                       label: 'Enter Email',
                       controller: _emailController,
+                      defaultValue: 'nhatvuong99@gmail.com',
                       validator: (value) {
                         return RulesValidator.validatorEmail(
                             value); // Return null if the email is valid
@@ -124,20 +172,17 @@ class _SignInPageState extends State<SignInPage> {
                         isPassword: true,
                         label: 'Password',
                         controller: _passwordController,
+                        defaultValue: 'nhatvuong99',
                         validator: (value) {
-                          return RulesValidator.validatorPassword(value);
+                          return RulesValidator.validatorPasswordSignIn(value);
                         }),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              "Recovery password",
-                              style: AppTextStyle.instance.textLetter,
-                            )),
-                      ],
-                    ),
+                    TextButton(
+                        onPressed: _forgotPassword,
+                        child: Text(
+                          "Forgot Password",
+                          style: AppTextStyle.instance.textLetter,
+                        )),
+                    const SizedBox(height: 20),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(100),
@@ -153,36 +198,32 @@ class _SignInPageState extends State<SignInPage> {
                             shape: const RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(99)))),
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            authService.singIn(
-                              context: context,
-                              email: _emailController.text,
-                              password: _passwordController.text,
-                            );
-                          }
-                        },
-                        child: Text(
-                          "Sign in",
-                          style: AppTextStyle.instance.inputText,
-                        ),
+                        onPressed: _isLoading ? null : _handleSignIn,
+                        child: _isLoading
+                            ? const CircularProgressIndicator(
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white))
+                            : Text(
+                                'Sign In',
+                                style: AppTextStyle.instance.inputText,
+                              ),
                       ),
                     ),
                     const SizedBox(height: 25),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(AppSVG.line),
-                        Text('or  '),
-                        SvgPicture.asset(AppSVG.line),
+                        SvgPicture.asset(ConstantSvg.line),
+                        const Text('or'),
+                        SvgPicture.asset(ConstantSvg.line),
                       ],
                     ),
                     const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        SvgPicture.asset(AppSVG.google),
-                        SvgPicture.asset(AppSVG.apple),
+                        SvgPicture.asset(ConstantSvg.google),
+                        SvgPicture.asset(ConstantSvg.apple),
                       ],
                     ),
                     const SizedBox(

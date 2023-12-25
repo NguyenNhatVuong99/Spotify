@@ -1,20 +1,23 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:mobile/components/custom_dialog.dart';
-import 'package:mobile/pages/auth/sign_in_page.dart';
-import 'package:mobile/pages/home/home_page.dart';
+import 'package:mobile/components/custom_dialog_with_video.dart';
+import 'package:mobile/configs/constant_video.dart';
+import 'package:mobile/configs/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  singIn({
+  Future<bool> singIn({
     required String email,
     required String password,
     required BuildContext context,
   }) async {
     try {
       Response res = await post(
-        Uri.parse('https://spotify-xemk.onrender.com/api/auth/login'),
+        Uri.parse(loginURL),
         body: jsonEncode({"email": email, "password": password}),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
@@ -23,35 +26,32 @@ class AuthService {
 
       if (res.statusCode == 201) {
         Map<String, dynamic> responseBody = json.decode(res.body);
-
         String accessToken = responseBody['accessToken'];
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setString('x-auth-token', accessToken);
-
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
-        );
+        return true;
       } else {
         throw jsonDecode(res.body)["message"];
       }
     } catch (err) {
-      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (context) {
-          return CustomDialog(
-            title: 'LOGIN FAILED',
-            desc: err.toString(),
-          );
+          return CustomDialogWithVideo(
+              desc: err.toString(), videoUrl: ConstantVideo.meoSad);
         },
       );
+      return false;
     }
   }
 
-  signUp({
+  Future<String> getTokenAuth() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getString('x-auth-token') ?? '';
+  }
+
+  Future<bool> signUp({
     required BuildContext context,
     required String name,
     required String email,
@@ -59,7 +59,7 @@ class AuthService {
   }) async {
     try {
       Response res = await post(
-        Uri.parse('https://spotify-xemk.onrender.com/api/auth/register'),
+        Uri.parse(registerURL),
         body: jsonEncode(
           {"email": email, "password": password, "full_name": name},
         ),
@@ -68,25 +68,26 @@ class AuthService {
         },
       );
       if (res.statusCode == 201) {
-        // ignore: use_build_context_synchronously
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const SignInPage()),
-        );
+        return true;
       } else {
         throw jsonDecode(res.body)["message"];
       }
     } catch (err) {
-      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (context) {
           return CustomDialog(
-            title: 'Register FAILED',
             desc: err.toString(),
           );
         },
       );
+      return false;
     }
+  }
+
+  Future<bool> logout() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.remove('x-auth-token');
+    return true;
   }
 }

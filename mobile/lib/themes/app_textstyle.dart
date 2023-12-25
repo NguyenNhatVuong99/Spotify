@@ -52,7 +52,7 @@ class AppTextStyle {
     fontWeight: FontWeight.w700,
   );
   TextStyle textFooterColor = const TextStyle(
-    color: AppColor.blueTextColor,
+    color: AppColor.primaryColor,
     fontSize: 14,
     fontFamily: 'satoshi',
     fontWeight: FontWeight.w700,

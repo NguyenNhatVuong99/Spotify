@@ -4,7 +4,7 @@ import 'package:mobile/rules/rules.dart';
 import 'sign_in_page.dart';
 import 'package:mobile/themes/app_textstyle.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mobile/configs/svg.dart';
+import 'package:mobile/configs/constant_svg.dart';
 import 'package:mobile/themes/app_color.dart';
 import 'package:mobile/services/auth_service.dart';
 
@@ -44,7 +44,7 @@ class _SignUpPageState extends State<SignUpPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              AppSVG.logo,
+              ConstantSvg.logo,
               height: 33,
             ),
           ],
@@ -53,7 +53,7 @@ class _SignUpPageState extends State<SignUpPage> {
           children: [
             IconButton(
               icon: SvgPicture.asset(
-                AppSVG.arrow,
+                ConstantSvg.arrow,
                 // ignore: deprecated_member_use
                 color: Colors.white,
                 height: 20,
@@ -125,7 +125,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         label: 'Password',
                         controller: _passwordController,
                         validator: (value) {
-                          return RulesValidator.validatorPassword(value);
+                          return RulesValidator.validatorPasswordSignUp(value);
                         }),
                     const SizedBox(
                       height: 20,
@@ -165,17 +165,17 @@ class _SignUpPageState extends State<SignUpPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(AppSVG.line),
-                        const Text('or  '),
-                        SvgPicture.asset(AppSVG.line),
+                        SvgPicture.asset(ConstantSvg.line),
+                        const Text('or'),
+                        SvgPicture.asset(ConstantSvg.line),
                       ],
                     ),
                     const SizedBox(height: 30),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        SvgPicture.asset(AppSVG.google),
-                        SvgPicture.asset(AppSVG.apple),
+                        SvgPicture.asset(ConstantSvg.google),
+                        SvgPicture.asset(ConstantSvg.apple),
                       ],
                     ),
                     const SizedBox(
@@ -189,7 +189,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           style: AppTextStyle.instance.textFooter,
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: _navigateToSignInPage,
                           child: Text(
                             "Sign In",
                             style: AppTextStyle.instance.textFooterColor,

@@ -5,11 +5,13 @@ class AppInput extends StatefulWidget {
   final bool isPassword;
   final String? Function(String?)? validator;
   final String label;
+  final String? defaultValue; // Add this line
   const AppInput(
       {super.key,
       this.controller,
       this.validator,
       required this.label,
+      this.defaultValue,
       this.isPassword = false});
 
   @override
@@ -25,6 +27,12 @@ class _AppInputState extends State<AppInput> {
     });
   }
 
+  void initState() {
+    super.initState();
+    // Initialize the controller's text with the provided value
+    widget.controller?.text = widget.defaultValue ?? '';
+  }
+
   @override
   Widget build(BuildContext context) {
     final _error = _errorMessage != null;
@@ -36,10 +44,9 @@ class _AppInputState extends State<AppInput> {
           obscureText: widget.isPassword ? !_isPasswordVisible : false,
           controller: widget.controller,
           decoration: InputDecoration(
-            labelStyle: TextStyle(color: Colors.green),
-
+            labelStyle: const TextStyle(color: Colors.green),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.green),
+                borderSide: const BorderSide(color: Colors.green),
                 borderRadius: BorderRadius.circular(20)),
             // enabledBorder: UnderlineInputBorder(
             //   borderSide: BorderSide(color: Colors.green),
@@ -55,7 +62,7 @@ class _AppInputState extends State<AppInput> {
                   )
                 : null,
             hintText: _error ? null : widget.label,
-            hintStyle: TextStyle(color: Colors.white),
+            hintStyle: const TextStyle(color: Colors.red),
             errorStyle: const TextStyle(fontSize: 0.1, height: 0),
             labelText: widget.label,
 
@@ -74,10 +81,16 @@ class _AppInputState extends State<AppInput> {
             return error;
           },
         ),
-        SizedBox(
+        const SizedBox(
           height: 5,
         ),
-        Text(_error ? _errorMessage! : '')
+        Text(
+          _error ? _errorMessage! : '',
+          style: const TextStyle(
+            fontSize: 14.0, // Desired font size
+            color: Colors.red, // Desired color
+          ),
+        )
       ],
     );
   }

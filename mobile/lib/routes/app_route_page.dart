@@ -19,12 +19,12 @@ class AppRoutePage {
 }
 
 final List<AppRoutePage> routePage = [
+  const AppRoutePage(AppRouteName.authRoute, AuthPage()),
+  const AppRoutePage(AppRouteName.signInRoute, SignInPage()),
+  const AppRoutePage(AppRouteName.signUpRoute, SignUpPage()),
   const AppRoutePage(AppRouteName.loadingRoute, LoadingPage()),
   const AppRoutePage(AppRouteName.getStartRoute, GetStartPage()),
   const AppRoutePage(AppRouteName.chooseModeRoute, ChooseModePage()),
-  const AppRoutePage(AppRouteName.authRoute, AuthPage()),
-  AppRoutePage(AppRouteName.signInRoute, SignInPage()),
-  AppRoutePage(AppRouteName.signUpRoute, SignUpPage()),
   const AppRoutePage(AppRouteName.homeRoute, HomePage()),
   const AppRoutePage(AppRouteName.lyricsRoute, LyricsPage()),
   const AppRoutePage(AppRouteName.musicRoute, MusicPage()),

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/pages/auth/support_page.dart';
 import 'package:mobile/themes/app_color.dart';
 import 'sign_in_page.dart';
 import 'sign_up_page.dart';
 import 'package:mobile/themes/app_textstyle.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mobile/configs/svg.dart';
-
+import 'package:mobile/configs/constant_svg.dart';
 
 class AuthPage extends StatefulWidget {
   const AuthPage({Key? key}) : super(key: key);
@@ -19,7 +17,7 @@ class _AuthPageState extends State<AuthPage> {
   void _navigateToRegisterPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SignUpPage()),
+      MaterialPageRoute(builder: (context) => const SignUpPage()),
     );
   }
 
@@ -29,7 +27,6 @@ class _AuthPageState extends State<AuthPage> {
       MaterialPageRoute(builder: (context) => const SignInPage()),
     );
   }
-    
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +35,7 @@ class _AuthPageState extends State<AuthPage> {
         backgroundColor: AppColor.grayMediumBackgroundColor,
         leading: IconButton(
           icon: SvgPicture.asset(
-            AppSVG.arrow,
+            ConstantSvg.arrow,
             // ignore: deprecated_member_use
             color: Colors.white,
             height: 20,
@@ -68,7 +65,7 @@ class _AuthPageState extends State<AuthPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset(AppSVG.logo),
+                      SvgPicture.asset(ConstantSvg.logo),
                     ],
                   ),
                   const SizedBox(height: 50),

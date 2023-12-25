@@ -1,4 +1,4 @@
-class AppSVG {
+class ConstantSvg {
   static const path = 'assets/svg';
   static const logo = '$path/Logo.svg';
   static const person = '$path/Person.svg';

@@ -51,10 +51,14 @@ class RulesValidator {
         Rules.isEmail(value);
   }
 
-  static validatorPassword(String? value) {
+  static validatorPasswordSignUp(String? value) {
     return Rules.isRequired(value) ??
         Rules.isCheckLength(value, 6, 30) ??
         Rules.isPassword(value);
+  }
+
+  static validatorPasswordSignIn(String? value) {
+    return Rules.isRequired(value);
   }
 
   static validatorConfirmPassword(String? value, String? valuePassword) {

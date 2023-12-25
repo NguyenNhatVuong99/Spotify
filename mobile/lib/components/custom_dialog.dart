@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:mobile/themes/app_color.dart';
-import 'package:mobile/themes/app_textstyle.dart';
 
 class CustomDialog extends StatelessWidget {
-  final String title;
   final String desc;
   const CustomDialog({
     super.key,
-    required this.title,
     required this.desc,
   });
 
@@ -30,7 +27,6 @@ class CustomDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             const SizedBox(height: 16),
-            Text(title, style: AppTextStyle.instance.diaLogStyle),
             const SizedBox(height: 8),
             Text(
               desc.toString(),
@@ -47,13 +43,11 @@ class CustomDialog extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Container(
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: AppColor.blackBackground1Color,
-                  ),
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: AppColor.whiteText2Color,
                 ),
               ),
             ),

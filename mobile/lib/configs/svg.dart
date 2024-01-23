@@ -13,6 +13,6 @@ class AppSVG {
   static const search = '$path/Search.svg';
   static const shuffle = '$path/Shuffle.svg';
   static const goToTop = '$path/goto_top.svg';
-  static const moon = '$path/Moon.svg'; 
-  static const sun = '$path/Sun.svg'; 
+  static const moon = '$path/Moon.svg';
+  static const sun = '$path/Sun.svg';
 }

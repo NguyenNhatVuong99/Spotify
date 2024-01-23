@@ -1,0 +1,175 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Users {
+    id            String          @id @default(uuid())
+    email         String          @unique
+    password      String
+    full_name     String
+    images        String?
+    followers     Int             @default(0)
+    product       UserProduct     @default(free)
+    role          Role            @default(user)
+    status        Boolean         @default(true)
+    Artists       Artists?
+    created_at    DateTime        @default(now())
+    updated_at    DateTime        @updatedAt
+    Playlists     Playlists[]
+    FollowArtists FollowArtists[]
+    Players       Players[]
+}
+
+model Artists {
+    id            String          @id @default(uuid())
+    name          String
+    images        String?
+    followers     Int             @default(0)
+    popularity    Int             @default(0)
+    status        Boolean         @default(true)
+    user          Users           @relation(fields: [user_id], references: [id])
+    user_id       String          @unique
+    created_at    DateTime        @default(now())
+    updated_at    DateTime        @updatedAt
+    Albums        Albums[]
+    FollowArtists FollowArtists[]
+}
+
+model Albums {
+    id           String    @id @default(uuid())
+    name         String
+    images       String?
+    followers    Int       @default(0)
+    popularity   Int       @default(0)
+    type         AlbumType @default(album)
+    total_tracks Int
+    release_date DateTime
+    status       Boolean   @default(true)
+    artist       Artists   @relation(fields: [artist_id], references: [id])
+    artist_id    String
+    created_at   DateTime  @default(now())
+    updated_at   DateTime  @updatedAt
+    Tracks       Tracks[]
+}
+
+model Tracks {
+    id              String            @id @default(uuid())
+    name            String
+    images          String?
+    duration_ms     Int
+    popularity      Int               @default(0)
+    release_date    DateTime
+    mp3             String
+    status          Boolean           @default(true)
+    album           Albums            @relation(fields: [album_id], references: [id])
+    album_id        String
+    created_at      DateTime          @default(now())
+    updated_at      DateTime          @updatedAt
+    Lyrics          Lyrics[]
+    PlaylistDetails PlaylistDetails[]
+    FollowArtists   FollowArtists[]
+    Players         Players[]
+}
+
+model Lyrics {
+    id       String  @id @default(uuid())
+    content  String
+    track    Tracks  @relation(fields: [track_id], references: [id])
+    track_id String
+    index    Int
+    start    String
+    end      String
+    status   Boolean @default(true)
+
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+}
+
+model Playlists {
+    id              String            @id @default(uuid())
+    user            Users             @relation(fields: [user_id], references: [id])
+    user_id         String
+    name            String
+    images          String?
+    total_tracks    Int               @default(0)
+    public          Boolean           @default(true)
+    status          Boolean           @default(true)
+    created_at      DateTime          @default(now())
+    updated_at      DateTime          @updatedAt
+    PlaylistDetails PlaylistDetails[]
+}
+
+model PlaylistDetails {
+    id          String    @id @default(uuid())
+    playlist    Playlists @relation(fields: [playlist_id], references: [id])
+    playlist_id String
+    track       Tracks    @relation(fields: [track_id], references: [id])
+    track_id    String
+    status      Boolean   @default(true)
+    created_at  DateTime  @default(now())
+    updated_at  DateTime  @updatedAt
+}
+
+model FollowArtists {
+    id         String   @id @default(uuid())
+    user       Users    @relation(fields: [user_id], references: [id])
+    user_id    String
+    artist     Artists  @relation(fields: [artist_id], references: [id])
+    artist_id  String
+    status     Boolean  @default(true)
+    created_at DateTime @default(now())
+    updated_at DateTime @updatedAt
+    Tracks     Tracks?  @relation(fields: [tracksId], references: [id])
+    tracksId   String?
+}
+
+model Players {
+    id            String      @id @default(uuid())
+    user          Users       @relation(fields: [user_id], references: [id])
+    user_id       String
+    repeat_state  RepeatState @default(off)
+    shuffle_state Boolean     @default(true)
+    progress_ms   Int         @default(0)
+    is_playing    Boolean     @default(true)
+    track         Tracks      @relation(fields: [track_id], references: [id])
+    track_id      String
+    status        Boolean     @default(true)
+    created_at    DateTime    @default(now())
+    updated_at    DateTime    @updatedAt
+}
+
+enum Role {
+    user
+    admin
+}
+
+enum UserProduct {
+    free
+    premium
+}
+
+enum AlbumType {
+    album
+    single
+    compilation
+}
+
+enum RepeatState {
+    off
+    track
+    context
+}
+
+// enum ModelType {
+//     artist
+//     album
+//     track
+// }

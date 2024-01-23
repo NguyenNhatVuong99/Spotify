@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/themes/app_color.dart';
-import 'package:mobile/themes/app_textstyle.dart';
+import 'package:flutter_spotify/themes/app_color.dart';
+import 'package:flutter_spotify/themes/app_textstyle.dart';
+
 
 class CustomElevatedButton extends StatelessWidget {
   final String text;

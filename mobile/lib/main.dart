@@ -1,30 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:mobile/routes/app_route.dart';
-import 'package:mobile/themes/app_color.dart';
-import 'package:mobile/themes/provide_theme.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_spotify/routes/app_route.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child) {
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            title: 'Theme Toggle',
-            theme: themeProvider.isDarkTheme
-                ? ThemeData.dark()
-                : ThemeData.light(),
-            routerConfig: router,
-          );
-        },
-      ),
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+          useMaterial3: false,
+          primarySwatch: Colors.green,
+          brightness: Brightness.dark,
+          scaffoldBackgroundColor: const Color.fromARGB(255, 22, 22, 22),
+          fontFamily: 'Circular'),
+      debugShowCheckedModeBanner: false,
+      routerConfig: router,
     );
   }
 }

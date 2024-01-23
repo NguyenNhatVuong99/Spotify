@@ -1,5 +1,6 @@
-name: mobile
-description: "A new Flutter project."
+name: flutter_spotify
+description: A new Flutter project.
+
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -19,7 +20,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.2.0 <4.0.0'
+  sdk: '>=2.19.0-146.2.beta <3.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -35,12 +36,14 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  go_router: ^12.1.1
-  flutter_svg: ^2.0.9
-  flare_flutter: ^3.0.2
-  http: ^1.1.2
+  fluentui_system_icons: ^1.1.224
+  flutter_bounceable: ^1.1.0
+  audioplayers: ^4.1.0
+  flutter_riverpod: ^2.4.9
   provider: ^6.1.1
-  cached_network_image: ^3.3.0
+  go_router: ^13.0.1
+  flutter_svg: ^2.0.9
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -71,7 +74,8 @@ flutter:
   assets:
     - assets/svg/
     - assets/images/
-
+    - assets/video/
+    - assets/audio/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
@@ -84,9 +88,18 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Satoshi
+    - family: Circular
       fonts:
-        - asset: assets/fonts/Satoshi.ttf  
+        - asset: assets/fonts/CircularStd-Black.otf
+        - asset: assets/fonts/CircularStd-BlackItalic.otf
+          style: italic
+        - asset: assets/fonts/CircularStd-Bold.otf
+        - asset: assets/fonts/CircularStd-Light Italic.otf
+          style: italic
+        - asset: assets/fonts/CircularStd-Light.otf
+        - asset: assets/fonts/CircularStd-Medium.otf
+        - asset: assets/fonts/CircularStd-MediumItalic.otf
+          style: italic
   # fonts:
   #   - family: Schyler
   #     fonts:
@@ -101,4 +114,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-  
